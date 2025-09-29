@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Travel Adventures</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap');
+        
+        :root {
+            --planet-color: #4f46e5;
+        }
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: #0f0f23;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .planet-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-bottom: 2px solid var(--planet-color);
+        }
+        
+        .planet-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .planet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .travel-btn {
+            background: var(--planet-color);
+            transition: all 0.3s ease;
+        }
+        
+        .travel-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--planet-color);
+        }
+        
+        .planet-image {
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+        }
+        
+        .stats-bar {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .stats-fill {
+            height: 100%;
+            background: var(--planet-color);
+            transition: width 1.5s ease-in-out;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        .moon-color { --planet-color: #a1a1aa; }
+        .mars-color { --planet-color: #ef4444; }
+        .mercury-color { --planet-color: #6b7280; }
+        .venus-color { --planet-color: #f59e0b; }
+        .iss-color { --planet-color: #3b82f6; }
+        .jupiter-color { --planet-color: #f97316; }
+        .saturn-color { --planet-color: #eab308; }
+    </style>
+</head>
+<body class="moon-color">
+    <!-- Background Stars -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Header -->
+    <header class="planet-header py-6 px-4 md:px-8">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <i class="fas fa-rocket text-3xl mr-3" style="color: var(--planet-color);"></i>
+                <h1 class="text-2xl md:text-3xl font-bold">Space Travel Adventures</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#" class="hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Destinations</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Book Now</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="py-12 px-4 md:px-8">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" id="planet-name">Moon</h2>
+                <p class="text-xl mb-6" id="planet-tagline">Earth's natural satellite and humanity's first step into space</p>
+                <div class="flex space-x-4">
+                    <button class="travel-btn py-3 px-6 rounded-full font-bold">Book Journey</button>
+                    <button class="py-3 px-6 rounded-full font-bold border border-white hover:bg-white hover:bg-opacity-10 transition-colors">Learn More</button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="planet-image w-64 h-64 md:w-80 md:h-80 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center relative">
+                    <div class="w-48 h-48 md:w-60 md:h-60 rounded-full bg-gradient-to-br from-gray-400 to-gray-600"></div>
+                    <div class="absolute w-16 h-16 rounded-full bg-gray-500 top-8 left-12"></div>
+                    <div class="absolute w-10 h-10 rounded-full bg-gray-400 bottom-10 right-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Planet Info Section -->
+    <section class="py-12 px-4 md:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center">Destination Information</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Planet Facts -->
+                <div class="planet-card p-6">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--planet-color);">Key Facts</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between">
+                            <span>Distance from Earth:</span>
+                            <span id="distance">384,400 km</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Travel Time:</span>
+                            <span id="travel-time">3 days</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Gravity:</span>
+                            <span id="gravity">16.6% of Earth</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Temperature:</span>
+                            <span id="temperature">-173°C to 127°C</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Travel Details -->
+                <div class="planet-card p-6">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--planet-color);">Travel Details</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between">
+                            <span>Journey Cost:</span>
+                            <span id="cost">$250,000</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Available Dates:</span>
+                            <span id="dates">Monthly launches</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Spaceship:</span>
+                            <span id="spaceship">Lunar Explorer X1</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Activities:</span>
+                            <span id="activities">Lunar walks, base visits</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-bold mb-6 text-center">Travel Difficulty Metrics</h3>
+                <div class="space-y-6 max-w-2xl mx-auto">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Physical Challenge</span>
+                            <span id="physical-challenge">60%</span>
+                        </div>
+                        <div class="stats-bar h-3">
+                            <div class="stats-fill" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Technical Complexity</span>
+                            <span id="technical-complexity">40%</span>
+                        </div>
+                        <div class="stats-bar h-3">
+                            <div class="stats-fill" style="width: 40%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span>Cost</span>
+                            <span id="cost-metric">80%</span>
+                        </div>
+                        <div class="stats-bar h-3">
+                            <div class="stats-fill" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Highlights Section -->
+    <section class="py-12 px-4 md:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center">Journey Highlights</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="planet-card p-6 text-center">
+                    <i class="fas fa-user-astronaut text-4xl mb-4" style="color: var(--planet-color);"></i>
+                    <h3 class="text-xl font-bold mb-2" id="highlight1-title">Lunar Surface Walk</h3>
+                    <p id="highlight1-desc">Experience the thrill of walking on the Moon's surface with reduced gravity.</p>
+                </div>
+                <div class="planet-card p-6 text-center">
+                    <i class="fas fa-home text-4xl mb-4" style="color: var(--planet-color);"></i>
+                    <h3 class="text-xl font-bold mb-2" id="highlight2-title">Lunar Base Visit</h3>
+                    <p id="highlight2-desc">Tour the state-of-the-art lunar research base and see cutting-edge space technology.</p>
+                </div>
+                <div class="planet-card p-6 text-center">
+                    <i class="fas fa-globe-americas text-4xl mb-4" style="color: var(--planet-color);"></i>
+                    <h3 class="text-xl font-bold mb-2" id="highlight3-title">Earth Views</h3>
+                    <p id="highlight3-desc">Witness breathtaking views of Earth rising over the lunar horizon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-8 px-4 md:px-8 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <p>Space Travel Adventures &copy; 2023 | The Future of Exploration</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                const opacity = Math.random() * 0.7 + 0.3;
+                star.style.opacity = opacity;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // Planet data
+        const planetData = {
+            moon: {
+                name: "Moon",
+                tagline: "Earth's natural satellite and humanity's first step into space",
+                distance: "384,400 km",
+                travelTime: "3 days",
+                gravity: "16.6% of Earth",
+                temperature: "-173°C to 127°C",
+                cost: "$250,000",
+                dates: "Monthly launches",
+                spaceship: "Lunar Explorer X1",
+                activities: "Lunar walks, base visits",
+                physicalChallenge: "60%",
+                technicalComplexity: "40%",
+                costMetric: "80%",
+                highlights: [
+                    { title: "Lunar Surface Walk", desc: "Experience the thrill of walking on the Moon's surface with reduced gravity." },
+                    { title: "Lunar Base Visit", desc: "Tour the state-of-the-art lunar research base and see cutting-edge space technology." },
+                    { title: "Earth Views", desc: "Witness breathtaking views of Earth rising over the lunar horizon." }
+                ]
+            },
+            mars: {
+                name: "Mars",
+                tagline: "The Red Planet - humanity's next frontier",
+                distance: "54.6 million km",
+                travelTime: "7 months",
+                gravity: "38% of Earth",
+                temperature: "-87°C to -5°C",
+                cost: "$500,000",
+                dates: "Every 26 months",
+                spaceship: "Mars Pioneer",
+                activities: "Rover expeditions, habitat stay",
+                physicalChallenge: "85%",
+                technicalComplexity: "75%",
+                costMetric: "95%",
+                highlights: [
+                    { title: "Olympus Mons Visit", desc: "Explore the largest volcano in the solar system, towering 22 km high." },
+                    { title: "Martian Rover Expedition", desc: "Drive across the red Martian landscape in a specialized exploration vehicle." },
+                    { title: "Habitat Experience", desc: "Stay in a fully-equipped Martian habitat designed for long-duration missions." }
+                ]
+            },
+            mercury: {
+                name: "Mercury",
+                tagline: "The scorching innermost planet of our solar system",
+                distance: "77 million km",
+                travelTime: "5 months",
+                gravity: "38% of Earth",
+                temperature: "-173°C to 427°C",
+                cost: "$900,000",
+                dates: "Every 4 months",
+                spaceship: "Solar Probe",
+                activities: "Crater exploration, solar observations",
+                physicalChallenge: "90%",
+                technicalComplexity: "85%",
+                costMetric: "98%",
+                highlights: [
+                    { title: "Caloris Basin", desc: "Visit one of the largest impact basins in the solar system, spanning 1,550 km." },
+                    { title: "Solar Observation", desc: "Witness the Sun appearing three times larger than from Earth." },
+                    { title: "Polar Ice Exploration", desc: "Explore permanently shadowed craters at the poles that contain water ice." }
+                ]
+            },
+            venus: {
+                name: "Venus",
+                tagline: "Earth's fiery sister planet with a runaway greenhouse effect",
+                distance: "41 million km",
+                travelTime: "4 months",
+                gravity: "91% of Earth",
+                temperature: "462°C",
+                cost: "$750,000",
+                dates: "Every 19 months",
+                spaceship: "Cloud City Explorer",
+                activities: "Atmospheric exploration, volcanic studies",
+                physicalChallenge: "95%",
+                technicalComplexity: "90%",
+                costMetric: "92%",
+                highlights: [
+                    { title: "Upper Atmosphere Float", desc: "Experience floating in Venus's upper atmosphere where conditions are most Earth-like." },
+                    { title: "Volcanic Landscapes", desc: "Observe Venus's extensive volcanic formations from safe orbital distances." },
+                    { title: "Cloud City Experience", desc: "Visit a conceptual floating habitat designed for Venus's upper atmosphere." }
+                ]
+            },
+            iss: {
+                name: "International Space Station",
+                tagline: "Humanity's orbital laboratory and gateway to space",
+                distance: "408 km",
+                travelTime: "6 hours",
+                gravity: "Microgravity",
+                temperature: "-157°C to 121°C",
+                cost: "$50,000",
+                dates: "Weekly launches",
+                spaceship: "SpaceX Crew Dragon",
+                activities: "Microgravity experiments, Earth observation",
+                physicalChallenge: "40%",
+                technicalComplexity: "30%",
+                costMetric: "60%",
+                highlights: [
+                    { title: "Microgravity Experience", desc: "Float weightlessly in the largest human-made object in space." },
+                    { title: "Cupola Observation", desc: "Enjoy panoramic views of Earth from the station's famous observation dome." },
+                    { title: "Scientific Experiments", desc: "Participate in ongoing microgravity research and experiments." }
+                ]
+            },
+            jupiter: {
+                name: "Jupiter",
+                tagline: "The gas giant with a mysterious Great Red Spot",
+                distance: "588 million km",
+                travelTime: "2 years",
+                gravity: "2.4 times Earth",
+                temperature: "-145°C",
+                cost: "$2,000,000",
+                dates: "Every 13 months",
+                spaceship: "Jupiter Orbiter",
+                activities: "Moon tours, atmospheric studies",
+                physicalChallenge: "98%",
+                technicalComplexity: "95%",
+                costMetric: "99%",
+                highlights: [
+                    { title: "Great Red Spot", desc: "Witness the massive storm that has raged for centuries, larger than Earth itself." },
+                    { title: "Moon Tour", desc: "Visit Jupiter's fascinating moons including Europa with its subsurface ocean." },
+                    { title: "Aurora Observation", desc: "See the most powerful auroras in the solar system, far brighter than Earth's." }
+                ]
+            },
+            saturn: {
+                name: "Saturn",
+                tagline: "The ringed jewel of our solar system",
+                distance: "1.2 billion km",
+                travelTime: "3 years",
+                gravity: "1.06 times Earth",
+                temperature: "-178°C",
+                cost: "$3,500,000",
+                dates: "Every 20 months",
+                spaceship: "Ring Explorer",
+                activities: "Ring exploration, moon visits",
+                physicalChallenge: "99%",
+                technicalComplexity: "98%",
+                costMetric: "99%",
+                highlights: [
+                    { title: "Ring Crossing", desc: "Experience flying through Saturn's magnificent ring system up close." },
+                    { title: "Titan Exploration", desc: "Visit Saturn's largest moon with its thick atmosphere and liquid methane lakes." },
+                    { title: "Hexagon Storm", desc: "Observe Saturn's mysterious north polar hexagon, a unique weather phenomenon." }
+                ]
+            }
+        };
+        
+        // Function to update the page with planet data
+        function updatePlanetData(planet) {
+            const data = planetData[planet];
+            
+            // Update basic info
+            document.getElementById('planet-name').textContent = data.name;
+            document.getElementById('planet-tagline').textContent = data.tagline;
+            
+            // Update facts
+            document.getElementById('distance').textContent = data.distance;
+            document.getElementById('travel-time').textContent = data.travelTime;
+            document.getElementById('gravity').textContent = data.gravity;
+            document.getElementById('temperature').textContent = data.temperature;
+            
+            // Update travel details
+            document.getElementById('cost').textContent = data.cost;
+            document.getElementById('dates').textContent = data.dates;
+            document.getElementById('spaceship').textContent = data.spaceship;
+            document.getElementById('activities').textContent = data.activities;
+            
+            // Update stats
+            document.getElementById('physical-challenge').textContent = data.physicalChallenge;
+            document.getElementById('technical-complexity').textContent = data.technicalComplexity;
+            document.getElementById('cost-metric').textContent = data.costMetric;
+            
+            // Update stats bars
+            document.querySelectorAll('.stats-fill')[0].style.width = data.physicalChallenge;
+            document.querySelectorAll('.stats-fill')[1].style.width = data.technicalComplexity;
+            document.querySelectorAll('.stats-fill')[2].style.width = data.costMetric;
+            
+            // Update highlights
+            document.getElementById('highlight1-title').textContent = data.highlights[0].title;
+            document.getElementById('highlight1-desc').textContent = data.highlights[0].desc;
+            document.getElementById('highlight2-title').textContent = data.highlights[1].title;
+            document.getElementById('highlight2-desc').textContent = data.highlights[1].desc;
+            document.getElementById('highlight3-title').textContent = data.highlights[2].title;
+            document.getElementById('highlight3-desc').textContent = data.highlights[2].desc;
+            
+            // Update planet color class
+            document.body.className = `${planet}-color`;
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            // Get planet from URL parameter or default to moon
+            const urlParams = new URLSearchParams(window.location.search);
+            let planet = urlParams.get('planet') || 'moon';
+            
+            // Validate planet
+            if (!planetData[planet]) {
+                planet = 'moon';
+            }
+            
+            updatePlanetData(planet);
+            
+            // Add animation to stats bars
+            setTimeout(() => {
+                document.querySelectorAll('.stats-fill').forEach(fill => {
+                    fill.style.transition = 'width 1.5s ease-in-out';
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
