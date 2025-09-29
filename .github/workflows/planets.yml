@@ -1,4 +1,4 @@
-name: Deploy static content to Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       planet:
-        description: 'Planet to display'
+        description: 'Default planet to display'
         required: true
         default: 'moon'
         type: choice
@@ -29,20 +29,32 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Create deployment info
+        run: |
+          echo "Deployed with featured planet: ${{ github.event.inputs.planet || 'moon' }}" > deployment-info.txt
+          echo "Deployment date: $(date)" >> deployment-info.txt
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
