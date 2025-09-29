@@ -35,6 +35,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
+      - name: Set default planet
+        run: |
+          PLANET="${{ github.event.inputs.planet || 'moon' }}"
+          echo "Setting default planet to: $PLANET"
+          
+          # Update the default planet in the JavaScript
+          sed -i "s/const defaultPlanet = '[^']*'/const defaultPlanet = '$PLANET'/" index.html
+          
+          # Also update the selector to show the correct default
+          sed -i "s/<option value=\"$PLANET\"/<option value=\"$PLANET\" selected/" index.html
+          
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
