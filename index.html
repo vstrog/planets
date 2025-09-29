@@ -119,6 +119,15 @@
     </style>
 </head>
 <body class="moon-color">
+    <script>
+    // Auto-redirect to include planet parameter if none exists
+    if (!window.location.search.includes('planet=')) {
+        const defaultPlanet = 'moon'; // This will be updated by GitHub Actions
+        const newUrl = `${window.location.pathname}?planet=${defaultPlanet}${window.location.hash}`;
+        window.history.replaceState({}, '', newUrl);
+        window.location.reload();
+    }
+</script>
     <!-- Background Stars -->
     <div class="stars" id="stars"></div>
     
